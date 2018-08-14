@@ -9,10 +9,28 @@
 <h1>Hello, World, from HTML</h1>
 
 <form action="/hello" method="post">
-    <input type="text" name="username"/>
-    <input type="password" name="password"/>
-    <button type="submit">Enter</button>
+    <input id="username-txt" type="text" name="username"/>
+    <input id="password-txt" type="password" name="pwd"/>
+    <button type="button" onclick="sayHello()">Enter</button>
 </form>
+
+<script>
+    function sayHello(){
+        var data = new URLSearchParams();
+        var username = document.getElementById("username-txt").value;
+        var password = document.getElementById("password-txt").value;
+        data.append("username", username);
+        data.append("pwd", password);
+        fetch("/hello", {
+            "method":"POST",
+            "body": data
+        }).then(function (response) {
+            return response.text();
+        }).then(function (msg) {
+            alert(msg);
+        });
+    }
+</script>
 
 
 
